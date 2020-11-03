@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Articles</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+          crossorigin="anonymous">
+
+    <script src="https://ajax.googleis.com/ajax/libs/jquery/3.10/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+    <div class="navbar-header">
+        <a href="#" class="navbar-brand"> Family Budget</a>
+    </div>
+
+    <div>
+        <ul class="nav navbar-nav" role="tablist">
+            <li class="active"><a href="http://localhost:8080/articles" role="tab">Articles</a> </li>
+            <li><a href="http://localhost:8080/balance" role="tab">Balance</a> </li>
+            <li><a href="http://localhost:8080/operations" role="tab">Operations</a> </li>
+        </ul>
+    </div>
+
+    </div>
+
+</nav>
+
+<div class="container">
+    <form role="form">
+
+
+        <div class="form-group">
+            <form method="post" action="/greeting">
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <button type="submit">JustClick</button>
+            </form>
+        </div>
+
+        <div class="form-group">
+            <form method="post" action="/addArticle">
+                <input type="text" name="name" placeholder="Article's name">
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <button type="submit">Add</button>
+            </form>
+        </div>
+
+        <div class="form-group">
+            <form method="get" action="/getArticle">
+                <input type="number" name="id" placeholder="Id" />
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <button type="submit">Get by id</button>
+            </form>
+        </div>
+
+        <div class="form-group">
+            <form method="post" action="/deleteArticle">
+                <input type="number" name="id" placeholder="Id" />
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+
+
+
+        <div class="form-group">
+            <form method="post" action="/showArticles">
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+                <button type="submit">Show Articles</button>
+            </form>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
