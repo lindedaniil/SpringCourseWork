@@ -25,6 +25,8 @@ public class BalanceController {
     @Autowired
     private ArticleRepository articleRepository;
 
+    private  boolean wrongadd = false;
+
     @RequestMapping(value = "/addBalance", method = RequestMethod.POST)
     @ResponseBody
     public String addBalance(@RequestParam String createdate, @RequestParam int debit, @RequestParam int credit) {
@@ -33,16 +35,16 @@ public class BalanceController {
         receivedBalance.setDebit(debit);
         receivedBalance.setCredit(credit);
         receivedBalance.setAmount(receivedBalance.getDebit() - receivedBalance.getCredit());
-
         balanceRepository.save(receivedBalance);
+
+        Optional<ArticlesEntity> checkArticle = articleRepository.findById(receivedBalance.getId());
 
         OperationsEntity newOperation = new OperationsEntity();
         newOperation.setDebit(receivedBalance.getDebit());
         newOperation.setCredit(receivedBalance.getCredit());
-
         newOperation.setCreatedate(receivedBalance.getCreatedate());
-        newOperation.setBalanceId(receivedBalance.getId());
-        newOperation.setArticleId(receivedBalance.getId());
+        newOperation.setBalance(receivedBalance);
+        newOperation.setArticle(checkArticle.get());
         operationRepository.save(newOperation);
 
         return "OK";
@@ -65,10 +67,9 @@ public class BalanceController {
         Optional<ArticlesEntity> checkArticle = articleRepository.findById(id);
         Optional<OperationsEntity> checkOperation = operationRepository.findById(id);
 
-
-        if (checkBalance.isPresent() && checkArticle.isPresent() && checkOperation.isPresent()) {
-            balanceRepository.deleteById(id);
+        if (checkArticle.isPresent() && checkBalance.isPresent() &&  checkOperation.isPresent()) {
             operationRepository.deleteById(id);
+            balanceRepository.deleteById(id);
             articleRepository.deleteById(id);
             return "OK";
         } else {

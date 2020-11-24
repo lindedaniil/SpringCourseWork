@@ -62,8 +62,8 @@ public class ArticleController {
         Optional<OperationsEntity> checkOperation = operationRepository.findById(id);
 
         if (checkBalance.isPresent() && checkArticle.isPresent() && checkOperation.isPresent()) {
-            balanceRepository.deleteById(id);
             operationRepository.deleteById(id);
+            balanceRepository.deleteById(id);
             articleRepository.deleteById(id);
             return "OK";
         } else {
